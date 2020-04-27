@@ -9,7 +9,7 @@ import tensorflow as tf
 
 from fr_utils import *
 from inception_blocks_v2 import *
-
+arr1 = []
 #with CustomObjectScope({'tf': tf}):
 FR_model = load_model('nn4.small2.v1.h5')
 print("Total Params:", FR_model.count_params())
@@ -50,6 +50,8 @@ while True:
 		if min_dist < 0.1:
 			cv2.putText(frame, "Face : " + identity[:-1], (x, y - 50), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
 			cv2.putText(frame, "Dist : " + str(min_dist), (x, y - 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
+			arr1.append(identity[:-1])
+			print(set(arr1))
 		else:
 			cv2.putText(frame, 'No matching faces', (x, y - 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 255), 2)
 

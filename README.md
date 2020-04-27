@@ -28,3 +28,9 @@ To generate your own dataset and add more faces to the system, use the following
 
 To use the facial recognition system, run the command on your terminal : 
 `python face_recognizer.py` 
+
+
+### Note 
+if you encounter: a numpy error  : ImportError: numpy.core.multiarray failed to import
+
+run --> pip install -U numpy
