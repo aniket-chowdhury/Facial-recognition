@@ -1,4 +1,6 @@
 '''Face Recognition Main File'''
+
+import sys
 import cv2
 import numpy as np
 import glob
@@ -30,8 +32,8 @@ from PIL import Image
 import os
 
 list_images = []
-for name in (os.listdir('uploads/Aniket')):
-	list_images.append(np.asarray(Image.open(os.path.join('uploads/Aniket',name))))
+for name in (os.listdir('uploads/'+str(sys.argv[1]))):
+	list_images.append(np.asarray(Image.open(os.path.join('uploads/'+str(sys.argv[1]),name))))
 	
 
 for frame in list_images:
