@@ -10,7 +10,7 @@ import tensorflow as tf
 from fr_utils import *
 from inception_blocks_v2 import *
 arr1 = []
-#with CustomObjectScope({'tf': tf}):
+
 FR_model = load_model('nn4.small2.v1.h5')
 print("Total Params:", FR_model.count_params())
 
@@ -25,13 +25,19 @@ for name in os.listdir('images'):
 		identity = os.path.splitext(os.path.basename(image))[0]
 		face_database[identity] = fr_utils.img_path_to_encoding(os.path.join('images',name,image), FR_model)
 
-print(face_database)
 
 from PIL import Image
-while True:
-	frame = np.asarray(Image.open('/home/aniket/Work/Facial-recognition/images/Aniket/Aniket1.jpg'))
+import os
+
+list_images = []
+for name in (os.listdir('uploads/Aniket')):
+	list_images.append(np.asarray(Image.open(os.path.join('uploads/Aniket',name))))
+	
+
+for frame in list_images:
 
 	faces = face_cascade.detectMultiScale(frame, 1.3, 5)
+
 	for(x,y,w,h) in faces:
 		cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
 		roi = frame[y:y+h, x:x+w]
@@ -44,17 +50,13 @@ while True:
 			if(dist < min_dist):
 				min_dist = dist
 				identity = name
-			print('Min dist: ',min_dist)
 
 		if min_dist < 0.1:
-			cv2.putText(frame, "Face : " + identity[:-1], (x, y - 50), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
-			cv2.putText(frame, "Dist : " + str(min_dist), (x, y - 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
 			arr1.append(identity[:-1])
-			print(set(arr1))
-		else:
-			cv2.putText(frame, 'No matching faces', (x, y - 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 255), 2)
+
+print(set(arr1))
 
 
-video_capture.release()
-cv2.destroyAllWindows()
+# video_capture.release()
+# cv2.destroyAllWindows()
 
