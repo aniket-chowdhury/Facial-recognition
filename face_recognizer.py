@@ -27,10 +27,9 @@ for name in os.listdir('images'):
 
 print(face_database)
 
-video_capture = cv2.VideoCapture(0)
+from PIL import Image
 while True:
-	ret, frame = video_capture.read()
-	frame = cv2.flip(frame, 1)
+	frame = np.asarray(Image.open('/home/aniket/Work/Facial-recognition/images/Aniket/Aniket1.jpg'))
 
 	faces = face_cascade.detectMultiScale(frame, 1.3, 5)
 	for(x,y,w,h) in faces:
@@ -55,9 +54,6 @@ while True:
 		else:
 			cv2.putText(frame, 'No matching faces', (x, y - 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 255), 2)
 
-	cv2.imshow('Face Recognition System', frame)
-	if(cv2.waitKey(1) & 0xFF == ord('q')):
-		break
 
 video_capture.release()
 cv2.destroyAllWindows()
